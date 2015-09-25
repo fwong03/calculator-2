@@ -7,26 +7,50 @@ calculator program yourself in this file.
 
 from arithmetic import *
 
+error_message = "I don't understand."
+exception_message = "Please enter an operator followed by integers."
 
 while True:
     line = raw_input("> ")
     tokens = line.split(" ")
+    operator = tokens[0]
     
-    if tokens[0] == "q":
-        print "ending program"
+    if operator == "q":
+        print "Goodbye!"
         break
     
+    elif len(tokens) == 1:
+        print error_message
 
-    else:
-        operator = tokens[0]
-        num1 = int(tokens[1])
+    elif len(tokens) == 2:       
+        try:
+            num1 = int(tokens[1])       
+        except ValueError:
+            print exception_message
+            continue
 
-        if len(tokens) > 2:
-           num2 = int(tokens[2])
+        if operator == "square":
+            print square(num1)
+        elif operator == "cube":
+            print cube(num1)
+        else:
+            print error_message
 
-        if operator == "q":
-            break
-        elif operator == "+":
+    elif len(tokens) == 3:
+
+        try:
+            num1 = int(tokens[1])       
+        except ValueError:
+            print exception_message
+            continue
+
+        try:
+            num2 = int(tokens[2])
+        except ValueError:
+            print exception_message
+            continue
+
+        if operator == "+":
             print add(num1, num2)
         elif operator == "-":
             print subtract(num1, num2)
@@ -34,16 +58,15 @@ while True:
             print multiply(num1, num2)
         elif operator == "/":
             print divide(num1, num2)
-        elif operator == "square":
-            print square(num1)
-        elif operator == "cube":
-            print cube(num1)
         elif operator == "pow":
             print power(num1, num2)
         elif operator == "mod":
             print mod(num1, num2)
         else:
-            print "I don't understand."
+            print error_message
+
+    else:
+        print error_message
     
 
 
